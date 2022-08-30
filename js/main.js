@@ -39,9 +39,10 @@ const displayData = (phones, dataLimit) => {
     <img src="${phone.image}" class="card-img-top" alt="...">
     <div class="card-body">
       <h5 class="card-title">${phone.phone_name}</h5>
+      <p class = "card-text">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Numquam, sunt? Consequatur recusandae suscipit perspiciatis impedit quos, nostrum cupiditate aliquid nobis.</p>
+      <button onclick = "loadPhoneDetails('${phone.slug}')" href="#" class="btn btn-primary">Details</button>
     </div>
   </div>
-
     `;
     phoneContainer.appendChild(phoneDiv);
   });
@@ -63,10 +64,15 @@ document.getElementById('search-btn').addEventListener('click', () => {
   toggleSpinner(true);
 
   processSearch(10);
-
-  
 })
 
+// search button by pressing enter
+document.getElementById('search-field').addEventListener('keypress', (e) => {
+  if (e.key === 'Enter'){
+    processSearch(10);
+    
+  }
+})
 
 // Toggle Spinner visible and hide
 const toggleSpinner = isLoading => {
@@ -86,6 +92,15 @@ document.getElementById('btn-show-all').addEventListener('click', () => {
   processSearch();
 
 })
+
+
+// detail view 
+const loadPhoneDetails = slug => {
+  const url = `https://openapi.programming-hero.com/api/phone/${slug}`;
+  fetch(url)
+  .then(res => res.json())
+  .then(data => console.log(data.data));
+}
 
 
 // loadData();
